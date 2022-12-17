@@ -5,10 +5,10 @@ public final class Constants {
     public static final int lowJunctionSlideTicks = 400;
     public static final int middleJunctionSlideTicks = 680;
     public static final int highJunctionSlideTicks = 975;
-    public static final int coneBaseHeightTicks = 25;
+    public static final int coneBaseHeightTicks = 28;
 
-    public static final double clawServoOpenPosition = -0.1;
-    public static final double clawServoClosedPosition = 0.2;
+    public static final double clawServoOpenPosition = 0.15;
+    public static final double clawServoClosedPosition = 0.31;
 
 
     public static final double PI         = Math.PI;
