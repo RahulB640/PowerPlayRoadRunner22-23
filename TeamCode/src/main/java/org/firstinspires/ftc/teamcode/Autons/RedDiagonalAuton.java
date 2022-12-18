@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.customUtil.Constants;
 import org.firstinspires.ftc.teamcode.customUtil.RobotHardwareMap;
 
 
-@Autonomous(name="Red Alliance Red Diagonal Auton", group="Auton")
+@Autonomous(name="Red Diagonal Auton", group="Auton")
 public class RedDiagonalAuton extends LinearOpMode {
 
     RobotHardwareMap robot = new RobotHardwareMap();
@@ -30,7 +30,7 @@ public class RedDiagonalAuton extends LinearOpMode {
                 .build();
 
         Trajectory scorePreloadedCone = drive.trajectoryBuilder(toBeacon.end())
-                .lineToLinearHeading(new Pose2d(65.5, 3, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(65, 3, Math.toRadians(-90)))
                 .build();
 
         Trajectory intakeCone1Step1 = drive.trajectoryBuilder(scorePreloadedCone.end())
@@ -58,7 +58,7 @@ public class RedDiagonalAuton extends LinearOpMode {
                 .build();
 
         Trajectory scoreCone1Step3 = drive.trajectoryBuilder(scoreCone1Step2.end())
-                .lineToLinearHeading(new Pose2d(56.25, -2.75, Math.toRadians(-35)))
+                .lineToLinearHeading(new Pose2d(55.75, -2.75, Math.toRadians(-35)))
                 .build();
 
         Trajectory intakeCone2Step1 = drive.trajectoryBuilder(scoreCone1Step3.end())
@@ -92,7 +92,15 @@ public class RedDiagonalAuton extends LinearOpMode {
                 .build();
 
         Trajectory parkInGreen = drive.trajectoryBuilder((parkInRedGreen1).end())
-                .lineToLinearHeading(new Pose2d(48, -18, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(48, -38, Math.toRadians(0)))
+                .build();
+
+        Trajectory parkInBlue1 = drive.trajectoryBuilder((intakeCone2Step3).end())
+                .lineToLinearHeading(new Pose2d(48, 27.5, Math.toRadians(90)))
+                .build();
+
+        Trajectory parkInBlue2 = drive.trajectoryBuilder((parkInBlue1).end())
+                .lineToLinearHeading(new Pose2d(48.1, 27.5, Math.toRadians(0)))
                 .build();
 
 

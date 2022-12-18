@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.customUtil.Constants;
 import org.firstinspires.ftc.teamcode.customUtil.RobotHardwareMap;
 
 
-@Autonomous(name="Blue Alliance Red Diagonal Auton", group="Auton")
+@Autonomous(name="Blue Diagonal Auton", group="Auton")
 public class BlueDiagonalAuton extends LinearOpMode {
 
     RobotHardwareMap robot = new RobotHardwareMap();
@@ -26,11 +26,11 @@ public class BlueDiagonalAuton extends LinearOpMode {
 
         //Make Trajectories
         Trajectory toBeacon = drive.trajectoryBuilder(new Pose2d())
-                .lineToLinearHeading(new Pose2d(18, -6.5, Math.toRadians(34)))
+                .lineToLinearHeading(new Pose2d(18, -7, Math.toRadians(34)))
                 .build();
 
         Trajectory scorePreloadedCone = drive.trajectoryBuilder(toBeacon.end())
-                .lineToLinearHeading(new Pose2d(69, 1, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(68, 0, Math.toRadians(90)))
                 .build();
 
         Trajectory intakeCone1Step1 = drive.trajectoryBuilder(scorePreloadedCone.end())
@@ -46,7 +46,7 @@ public class BlueDiagonalAuton extends LinearOpMode {
                 .build();
 
         Trajectory intakeCone1Step4 = drive.trajectoryBuilder(intakeCone1Step3.end())
-                .lineToLinearHeading(new Pose2d(54, -32, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(54, -35, Math.toRadians(-90)))
                 .build();
 
         Trajectory scoreCone1Step1 = drive.trajectoryBuilder(intakeCone1Step4.end())
@@ -58,7 +58,7 @@ public class BlueDiagonalAuton extends LinearOpMode {
                 .build();
 
         Trajectory scoreCone1Step3 = drive.trajectoryBuilder(scoreCone1Step2.end())
-                .lineToLinearHeading(new Pose2d(59, 5.75, Math.toRadians(35)))
+                .lineToLinearHeading(new Pose2d(58.5, 5, Math.toRadians(35)))
                 .build();
 
         Trajectory intakeCone2Step1 = drive.trajectoryBuilder(scoreCone1Step3.end())
@@ -70,7 +70,7 @@ public class BlueDiagonalAuton extends LinearOpMode {
                 .build();
 
         Trajectory intakeCone2Step3 = drive.trajectoryBuilder(intakeCone2Step2.end())
-                .lineToLinearHeading(new Pose2d(52, -32.5, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(52, -35, Math.toRadians(-90)))
                 .build();
 
         Trajectory ScoreCone3Step1 = drive.trajectoryBuilder(intakeCone2Step3.end())
@@ -78,10 +78,8 @@ public class BlueDiagonalAuton extends LinearOpMode {
                 .build();
 
         Trajectory ScoreCone3Step2 = drive.trajectoryBuilder(ScoreCone3Step1.end())
-                .lineToLinearHeading(new Pose2d(57, 7.75, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(57.5, 7, Math.toRadians(0)))
                 .build();
-
-
 
         Trajectory parkInRedBlue1 = drive.trajectoryBuilder(ScoreCone3Step2.end())
                 .lineToLinearHeading(new Pose2d(51, 7, Math.toRadians(0)))
@@ -93,6 +91,14 @@ public class BlueDiagonalAuton extends LinearOpMode {
 
         Trajectory parkInBlue = drive.trajectoryBuilder((parkInRedBlue1).end())
                 .lineToLinearHeading(new Pose2d(48, 22, Math.toRadians(0)))
+                .build();
+
+        Trajectory parkInGreen1 = drive.trajectoryBuilder((intakeCone2Step3).end())
+                .lineToLinearHeading(new Pose2d(44, -24, Math.toRadians(-90)))
+                .build();
+
+        Trajectory parkInGreen2 = drive.trajectoryBuilder((parkInGreen1).end())
+                .lineToLinearHeading(new Pose2d(44.1, -24, Math.toRadians(0)))
                 .build();
 
 
@@ -117,7 +123,7 @@ public class BlueDiagonalAuton extends LinearOpMode {
 
 
         drive.followTrajectory(scorePreloadedCone);
-        sleep(300);
+        sleep(20);
         robot.clawServo.setPosition(0);
         sleep(200);
         drive.followTrajectory(intakeCone1Step1);
@@ -128,14 +134,14 @@ public class BlueDiagonalAuton extends LinearOpMode {
         drive.followTrajectory(intakeCone1Step3);
         drive.followTrajectory(intakeCone1Step4);
         robot.clawServo.setPosition(Constants.clawServoClosedPosition);
-        sleep(300);
+        sleep(250);
         robot.slideMotor.setTargetPosition(Constants.highJunctionSlideTicks);
         sleep(200);
         drive.followTrajectory(scoreCone1Step1);
         drive.followTrajectory(scoreCone1Step2);
         drive.followTrajectory(scoreCone1Step3);
         robot.clawServo.setPosition(0);
-        sleep(200);
+        sleep(150);
         drive.followTrajectory(intakeCone2Step1);
         robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + (4 * Constants.coneBaseHeightTicks));
         drive.followTrajectory(intakeCone2Step2);
@@ -143,6 +149,7 @@ public class BlueDiagonalAuton extends LinearOpMode {
         robot.clawServo.setPosition(Constants.clawServoClosedPosition);
         sleep(250);
         robot.slideMotor.setTargetPosition(Constants.highJunctionSlideTicks);
+        sleep(250);
 
 
         if(color.equals("blue")){
@@ -166,8 +173,10 @@ public class BlueDiagonalAuton extends LinearOpMode {
             sleep(1000);
         }
         else{
+            drive.followTrajectory(parkInGreen1);
+            drive.followTrajectory(parkInGreen2);
             robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks);
-            robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + (4 * Constants.coneBaseHeightTicks));
+            sleep(250);
         }
         //Green DOES NOTHING
 

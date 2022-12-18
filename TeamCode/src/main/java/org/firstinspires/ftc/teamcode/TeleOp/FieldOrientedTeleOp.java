@@ -31,7 +31,7 @@ public class FieldOrientedTeleOp extends LinearOpMode {
 
         double currentAngle;
 
-        double maxMotorSpeed = 0.8;
+        double maxMotorSpeed = 0.7;
 
         double maxPower;
 
@@ -71,18 +71,29 @@ public class FieldOrientedTeleOp extends LinearOpMode {
             robot.backLeftMotor.setPower(backLeftPower * maxMotorSpeed);
 
             if (gamepad2.y){
-                if (heightDifferential <= (4* Constants.coneBaseHeightTicks)) {
-                    heightDifferential += Constants.coneBaseHeightTicks;
-                }
+                //4 Cone Stack
+                heightDifferential = Constants.coneBaseHeightTicks * 4;
+                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
             }
-            if (gamepad2.a){
-                if (heightDifferential >= Constants.coneBaseHeightTicks + 5) {
-                    heightDifferential -= Constants.coneBaseHeightTicks;
-                }
+            else if (gamepad2.x){
+                //3 Cone Stack
+                heightDifferential = Constants.coneBaseHeightTicks * 3;
+                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
+            }
+            else if (gamepad2.b){
+                //2 Stack Cone
+                heightDifferential = Constants.coneBaseHeightTicks * 2;
+                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
+            }
+            else if (gamepad2.a){
+                //1 Stack Cone
+                heightDifferential = Constants.coneBaseHeightTicks * 1;
+                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
             }
 
+
             if (gamepad2.dpad_down) {
-                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
+                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks);
             }
             else if (gamepad2.dpad_left) {
                 robot.slideMotor.setTargetPosition(Constants.lowJunctionSlideTicks);
@@ -95,12 +106,17 @@ public class FieldOrientedTeleOp extends LinearOpMode {
             }
 
 
-            if(gamepad2.b){
+            if(gamepad2.left_bumper){
                 robot.clawServo.setPosition(Constants.clawServoOpenPosition);
             }
-            else if(gamepad2.x) {
+            else if(gamepad2.right_bumper) {
                 robot.clawServo.setPosition(Constants.clawServoClosedPosition);
             }
+
+
+
+
+
 
 
             //TODO: Telemetry
@@ -108,6 +124,10 @@ public class FieldOrientedTeleOp extends LinearOpMode {
             telemetry.addData("Front Right Motor Power: ", robot.frontRightMotor.getPower());
             telemetry.addData("Back Left Motor Power: ", robot.backLeftMotor.getPower());
             telemetry.addData("Back Right Motor Power: ", robot.backRightMotor.getPower());
+
+            telemetry.addData("slideMotor Ticks ", robot.slideMotor.getCurrentPosition());
+
+            telemetry.addData("Level: ", (heightDifferential-5)/Constants.coneBaseHeightTicks);
 
             telemetry.update();
         }

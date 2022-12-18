@@ -32,7 +32,7 @@ public class RobotOrientedTeleOp extends LinearOpMode {
         double backLeftPower;
         double backRightPower;
 
-        double maxMotorSpeed = 0.8;
+        double maxMotorSpeed = 0.7;
 
         int heightDifferential = 0;
 
@@ -70,41 +70,30 @@ public class RobotOrientedTeleOp extends LinearOpMode {
 
 
 
-            //BUDGET CAMERA VISION
-            red = robot.colorSensor.red();
-            blue = robot.colorSensor.blue();
-            green = robot.colorSensor.green();
-            if(green > red && green > blue && blue > red){
-                color = "green";
-            }
-            else if(green < red && green > blue && red > blue){
-                color = "orange";
-            }
-            else if(red > green && red > blue && blue > green) {
-                color = "red";
-            }
-            else{
-                color = "invalid";
-            }
-
-
-
-
             if (gamepad2.y){
-                if (heightDifferential <= (4*Constants.coneBaseHeightTicks)) {
-                    heightDifferential += Constants.coneBaseHeightTicks;
-                    sleep(50);
-                }
+                //4 Cone Stack
+                heightDifferential = Constants.coneBaseHeightTicks * 4;
+                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
             }
-            if (gamepad2.a){
-                if (heightDifferential >= Constants.coneBaseHeightTicks + 5) {
-                    heightDifferential -= Constants.coneBaseHeightTicks;
-                    sleep(50);
-                }
+            else if (gamepad2.x){
+                //3 Cone Stack
+                heightDifferential = Constants.coneBaseHeightTicks * 3;
+                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
             }
+            else if (gamepad2.b){
+                //2 Stack Cone
+                heightDifferential = Constants.coneBaseHeightTicks * 2;
+                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
+            }
+            else if (gamepad2.a){
+                //1 Stack Cone
+                heightDifferential = Constants.coneBaseHeightTicks * 1;;
+                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
+            }
+
 
             if (gamepad2.dpad_down) {
-                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
+                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks);
             }
             else if (gamepad2.dpad_left) {
                 robot.slideMotor.setTargetPosition(Constants.lowJunctionSlideTicks);
@@ -117,10 +106,10 @@ public class RobotOrientedTeleOp extends LinearOpMode {
             }
 
 
-            if(gamepad2.b){
+            if(gamepad2.left_bumper){
                 robot.clawServo.setPosition(Constants.clawServoOpenPosition);
             }
-            else if(gamepad2.x) {
+            else if(gamepad2.right_bumper) {
                 robot.clawServo.setPosition(Constants.clawServoClosedPosition);
             }
 
@@ -139,12 +128,6 @@ public class RobotOrientedTeleOp extends LinearOpMode {
             telemetry.addData("slideMotor Ticks ", robot.slideMotor.getCurrentPosition());
 
             telemetry.addData("Level: ", (heightDifferential-5)/Constants.coneBaseHeightTicks);
-
-            telemetry.addData("Red Value: ", red);
-            telemetry.addData("Blue Value: ", blue);
-            telemetry.addData("Green Value: ", green);
-
-            telemetry.addData("Color: ", color);
 
             telemetry.update();
         }
