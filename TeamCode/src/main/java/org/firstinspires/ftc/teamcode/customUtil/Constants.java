@@ -2,13 +2,19 @@ package org.firstinspires.ftc.teamcode.customUtil;
 
 public final class Constants {
     public static final int slideGroundLevelTicks = 0;
-    public static final int lowJunctionSlideTicks = 400;
-    public static final int middleJunctionSlideTicks = 705;
-    public static final int highJunctionSlideTicks = 990;
-    public static final int coneBaseHeightTicks = 33;
+    public static final int lowJunctionSlideTicks = 580;
+    public static final int middleJunctionSlideTicks = 930;
+    public static final int highJunctionSlideTicks = 1200;
+    public static final int coneBaseHeightTicks = 42;
 
-    public static final double clawServoOpenPosition = 0.15;
-    public static final double clawServoClosedPosition = 0.31;
+    public static final int lasySusanForward = 0;
+    public static final int lasySusanRight = 72;
+    public static final int lasySusanBack = 144;
+    public static final int lasySusanLeft = 216;
+
+
+    public static final double clawServoOpenPosition = 0.2;
+    public static final double clawServoClosedPosition = 0.4;
 
 
     public static final double PI         = Math.PI;

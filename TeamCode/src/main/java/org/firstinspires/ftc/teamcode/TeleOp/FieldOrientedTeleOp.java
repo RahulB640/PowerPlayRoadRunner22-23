@@ -70,26 +70,66 @@ public class FieldOrientedTeleOp extends LinearOpMode {
             robot.backRightMotor.setPower(backRightPower * maxMotorSpeed);
             robot.backLeftMotor.setPower(backLeftPower * maxMotorSpeed);
 
-            if (gamepad2.y){
-                //4 Cone Stack
-                heightDifferential = Constants.coneBaseHeightTicks * 4;
-                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
+
+
+
+            //If slides are high enough, lets the lasy susan spin
+            if (robot.slideMotor.getCurrentPosition() < (0.8*Constants.lowJunctionSlideTicks)){
+                if (gamepad1.dpad_up){
+                    robot.lazySusanSpinner.setTargetPosition(0);
+                }
+                else if(gamepad1.dpad_right){
+                    robot.lazySusanSpinner.setTargetPosition(Constants.lasySusanRight);
+                }
+                else if (gamepad1.dpad_down){
+                    robot.lazySusanSpinner.setTargetPosition(Constants.lasySusanBack);
+                }
+                else if (gamepad1.dpad_left){
+                    robot.lazySusanSpinner.setTargetPosition((Constants.lasySusanLeft));
+                }
             }
-            else if (gamepad2.x){
-                //3 Cone Stack
-                heightDifferential = Constants.coneBaseHeightTicks * 3;
-                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
+
+
+            //Lets it go to ground level if lazy susan is in the front/back
+            if (((Math.abs(robot.lazySusanSpinner.getCurrentPosition()) < 5) ||
+                    Math.abs((288 - robot.lazySusanSpinner.getCurrentPosition())) < 5) ||
+                    (Math.abs(144 - robot.lazySusanSpinner.getCurrentPosition()) < 5)) {
+
+                if (gamepad2.dpad_down) {
+                    robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks);
+                }
+
+                if (gamepad2.y){
+                    //4 Cone Stack
+                    heightDifferential = Constants.coneBaseHeightTicks * 4;
+                    robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
+                }
+                else if (gamepad2.x){
+                    //3 Cone Stack
+                    heightDifferential = Constants.coneBaseHeightTicks * 3;
+                    robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
+                }
+                else if (gamepad2.b){
+                    //2 Stack Cone
+                    heightDifferential = Constants.coneBaseHeightTicks * 2;
+                    robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
+                }
+                else if (gamepad2.a){
+                    //1 Stack Cone
+                    heightDifferential = Constants.coneBaseHeightTicks * 1;
+                    robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
+                }
             }
-            else if (gamepad2.b){
-                //2 Stack Cone
-                heightDifferential = Constants.coneBaseHeightTicks * 2;
-                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
+
+            //Lets it go up to a height above the side plates no matter what
+            if (gamepad2.dpad_left) {
+                robot.slideMotor.setTargetPosition(Constants.lowJunctionSlideTicks);
+            } else if (gamepad2.dpad_right) {
+                robot.slideMotor.setTargetPosition(Constants.middleJunctionSlideTicks);
+            } else if (gamepad2.dpad_up) {
+                robot.slideMotor.setTargetPosition(Constants.highJunctionSlideTicks);
             }
-            else if (gamepad2.a){
-                //1 Stack Cone
-                heightDifferential = Constants.coneBaseHeightTicks * 1;
-                robot.slideMotor.setTargetPosition(Constants.slideGroundLevelTicks + heightDifferential);
-            }
+
 
 
             if (gamepad2.dpad_down) {
@@ -105,13 +145,12 @@ public class FieldOrientedTeleOp extends LinearOpMode {
                 robot.slideMotor.setTargetPosition(Constants.highJunctionSlideTicks);
             }
 
-
-            if(gamepad2.left_bumper){
-                robot.clawServo.setPosition(Constants.clawServoOpenPosition);
-            }
-            else if(gamepad2.right_bumper) {
-                robot.clawServo.setPosition(Constants.clawServoClosedPosition);
-            }
+//            if(gamepad2.left_bumper){
+//                robot.clawServo.setPosition(Constants.clawServoOpenPosition);
+//            }
+//            else if(gamepad2.right_bumper) {
+//                robot.clawServo.setPosition(Constants.clawServoClosedPosition);
+//            }
 
 
 

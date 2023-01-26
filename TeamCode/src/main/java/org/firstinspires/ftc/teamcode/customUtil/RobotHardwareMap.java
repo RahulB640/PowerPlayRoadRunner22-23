@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode.customUtil;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -19,10 +21,18 @@ public class RobotHardwareMap {
     public DcMotor backLeftMotor = null;
 
     public DcMotor slideMotor = null;
+    public DcMotor lazySusanSpinner = null;
 
-    public Servo clawServo = null;
+    public RevBlinkinLedDriver ledDriver = null;
 
-    public ColorSensor colorSensor = null;
+
+
+//    public DistanceSensor slideHeightSensor = null;
+//    public DistanceSensor coneSensor = null;
+//
+//    public Servo clawServo = null;
+
+    //public ColorSensor colorSensor = null;
 
     public BNO055IMU imu = null;
 
@@ -44,10 +54,16 @@ public class RobotHardwareMap {
         backLeftMotor = hwMap.get(DcMotor.class, "backLeftMotor");
 
         slideMotor = hwMap.get(DcMotor.class, "slideMotor");
+        lazySusanSpinner = hwMap.get(DcMotor.class, "lazySusanSpinner");
 
-        clawServo = hwMap.get(Servo.class, "clawServo");
+        ledDriver = hardwareMap.get(RevBlinkinLedDriver.class, "ledDriver");
 
-        colorSensor = hwMap.get(ColorSensor.class, "colorSensor");
+
+//        clawServo = hwMap.get(Servo.class, "clawServo");
+
+//
+//        coneSensor = hwMap.get(DistanceSensor.class, "coneSensor");
+//        slideHeightSensor = hwMap.get(DistanceSensor.class, "slideHeightSensor");
 
         //Set Up Motor Direction
         frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
@@ -56,8 +72,9 @@ public class RobotHardwareMap {
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
 
         slideMotor.setDirection(DcMotor.Direction.REVERSE);
+        lazySusanSpinner.setDirection(DcMotor.Direction.FORWARD);
 
-        clawServo.setDirection(Servo.Direction.FORWARD);
+//        clawServo.setDirection(Servo.Direction.FORWARD);
 
         //Set ZERO POWER BEHAVIOR
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -67,6 +84,8 @@ public class RobotHardwareMap {
 
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        lazySusanSpinner.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         //Set Motors to Use No Power
         frontRightMotor.setPower(0);
         frontLeftMotor.setPower(0);
@@ -75,7 +94,9 @@ public class RobotHardwareMap {
 
         slideMotor.setPower(0);
 
-        clawServo.setPosition(Constants.clawServoOpenPosition);
+        lazySusanSpinner.setPower(0);
+
+//        clawServo.setPosition(Constants.clawServoOpenPosition);
 
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -86,7 +107,16 @@ public class RobotHardwareMap {
         slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideMotor.setTargetPosition(5);
         slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slideMotor.setPower(0.5);
+        slideMotor.setPower(0.8);
+
+        lazySusanSpinner.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lazySusanSpinner.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lazySusanSpinner.setTargetPosition(5);
+        lazySusanSpinner.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lazySusanSpinner.setPower(0.8);
+
+
+        ledDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED_ORANGE);
 
 
 

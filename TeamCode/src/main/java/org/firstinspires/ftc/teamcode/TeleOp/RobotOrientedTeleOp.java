@@ -21,12 +21,6 @@ public class RobotOrientedTeleOp extends LinearOpMode {
         double strafe;
         double turn;
 
-        double red;
-        double green;
-        double blue;
-
-        String color;
-
         double frontLeftPower;
         double frontRightPower;
         double backLeftPower;
@@ -105,13 +99,13 @@ public class RobotOrientedTeleOp extends LinearOpMode {
                 robot.slideMotor.setTargetPosition(Constants.highJunctionSlideTicks);
             }
 
-
-            if(gamepad2.left_bumper){
-                robot.clawServo.setPosition(Constants.clawServoOpenPosition);
-            }
-            else if(gamepad2.right_bumper) {
-                robot.clawServo.setPosition(Constants.clawServoClosedPosition);
-            }
+//
+//            if(gamepad2.left_bumper){
+//                robot.clawServo.setPosition(Constants.clawServoOpenPosition);
+//            }
+//            else if(gamepad2.right_bumper) {
+//                robot.clawServo.setPosition(Constants.clawServoClosedPosition);
+//            }
 
 
 
